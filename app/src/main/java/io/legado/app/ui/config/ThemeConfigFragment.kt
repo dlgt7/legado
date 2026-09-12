@@ -76,6 +76,9 @@ class ThemeConfigFragment : PreferenceFragment(),
         if (Build.VERSION.SDK_INT < 26) {
             preferenceScreen.removePreferenceRecursively(PreferKey.launcherIcon)
         }
+        if (Build.VERSION.SDK_INT < 31) {
+            preferenceScreen.removePreferenceRecursively(PreferKey.dynamicColors)
+        }
         upPreferenceSummary(PreferKey.bgImage, getPrefString(PreferKey.bgImage))
         upPreferenceSummary(PreferKey.bgImageN, getPrefString(PreferKey.bgImageN))
         upPreferenceSummary(PreferKey.barElevation, AppConfig.elevation.toString())
@@ -141,6 +144,11 @@ class ThemeConfigFragment : PreferenceFragment(),
             PreferKey.launcherIcon -> LauncherIconHelp.changeIcon(getPrefString(key))
             PreferKey.transparentStatusBar -> recreateActivities()
             PreferKey.immNavigationBar -> recreateActivities()
+            PreferKey.dynamicColors -> {
+                listView.post {
+                    ThemeConfig.applyDayNight(requireContext())
+                }
+            }
             PreferKey.cPrimary,
             PreferKey.cAccent,
             PreferKey.cBackground,
