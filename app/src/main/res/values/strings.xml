@@ -378,6 +378,15 @@
     <string name="status_bar_immersion">The status bar color becomes transparent</string>
     <string name="imm_navigation_bar">immersion navigation bar</string>
     <string name="imm_navigation_bar_s">The navigation bar becomes transparent</string>
+    <string name="dynamic_colors">Dynamic colors</string>
+    <string name="dynamic_colors_desc">Follow system wallpaper colors (Android 12+)</string>
+    <string name="ai_assistant">AI Assistant</string>
+    <string name="ai_input_hint">Ask anything...</string>
+    <string name="ai_send">Send</string>
+    <string name="ai_no_api_key">Please configure API key first</string>
+    <string name="ai_config">AI Config</string>
+    <string name="thoughts_title">Thoughts</string>
+    <string name="export_thoughts">Export as Markdown</string>
     <string name="add_to_bookshelf">Add to Bookshelf</string>
     <string name="continue_read">Continue reading</string>
     <string name="cover_path">Cover path</string>
