@@ -84,8 +84,9 @@ class AnalyzeUrl(
     private val source: BaseSource? = null,
     private val ruleData: RuleDataInterface? = null,
     private val chapter: BookChapter? = null,
-    private val readTimeout: Long? = null,
+    private var readTimeout: Long? = null,
     private val callTimeout: Long? = null,
+    private var followRedirects: Boolean? = null,
     private var coroutineContext: CoroutineContext = EmptyCoroutineContext,
     headerMapF: Map<String, String>? = null,
     hasLoginHeader: Boolean = true
@@ -250,6 +251,8 @@ class AnalyzeUrl(
                 }
                 serverID = option.getServerID()
                 webViewDelayTime = max(0, option.getWebViewDelayTime() ?: 0)
+                option.getTimeout()?.let { readTimeout = it }
+                option.getFollowRedirects()?.let { followRedirects = it }
             }
         }
         urlNoQuery = url
@@ -515,16 +518,21 @@ class AnalyzeUrl(
 
     private fun getClient(): OkHttpClient {
         val client = getProxyClient(proxy)
-        if (readTimeout == null && callTimeout == null) {
+        if (readTimeout == null && callTimeout == null && followRedirects == null) {
             return client
         }
         return client.newBuilder().run {
-            if (readTimeout != null) {
-                readTimeout(readTimeout, TimeUnit.MILLISECONDS)
-                callTimeout(max(60 * 1000L, readTimeout * 2), TimeUnit.MILLISECONDS)
+            val timeout = readTimeout
+            if (timeout != null) {
+                readTimeout(timeout, TimeUnit.MILLISECONDS)
+                callTimeout(max(60 * 1000L, timeout * 2), TimeUnit.MILLISECONDS)
             }
             if (callTimeout != null) {
                 callTimeout(callTimeout, TimeUnit.MILLISECONDS)
+            }
+            val redirects = followRedirects
+            if (redirects != null) {
+                followRedirects(redirects)
             }
             build()
         }
@@ -717,6 +725,8 @@ class AnalyzeUrl(
          * webview等待页面加载完毕的延迟时间（毫秒）
          */
         private var webViewDelayTime: Long? = null,
+        private var timeout: Long? = null,
+        private var followRedirects: Boolean? = null,
     ) {
         fun setMethod(value: String?) {
             method = if (value.isNullOrBlank()) null else value
@@ -830,6 +840,14 @@ class AnalyzeUrl(
 
         fun getWebViewDelayTime(): Long? {
             return webViewDelayTime
+        }
+
+        fun getTimeout(): Long? {
+            return timeout
+        }
+
+        fun getFollowRedirects(): Boolean? {
+            return followRedirects
         }
     }
 
