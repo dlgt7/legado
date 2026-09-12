@@ -3,6 +3,7 @@ package io.legado.app.help.config
 import android.content.Context
 import android.graphics.Bitmap
 import android.graphics.Color
+import android.os.Build
 import android.util.DisplayMetrics
 import androidx.annotation.Keep
 import androidx.appcompat.app.AppCompatDelegate
@@ -240,6 +241,24 @@ object ThemeConfig {
      * 更新主题
      */
     fun applyTheme(context: Context) = with(context) {
+        if (AppConfig.dynamicColors && !AppConfig.isEInkMode) {
+            resolveDynamicColors(this)?.let { (primary, accent) ->
+                val isNight = AppConfig.isNightTheme
+                val background =
+                    if (isNight) getCompatColor(R.color.md_grey_900)
+                    else getCompatColor(R.color.md_grey_100)
+                val bBackground =
+                    if (isNight) getCompatColor(R.color.md_grey_850)
+                    else getCompatColor(R.color.md_grey_200)
+                ThemeStore.editTheme(this)
+                    .primaryColor(primary)
+                    .accentColor(accent)
+                    .backgroundColor(background)
+                    .bottomBackground(bBackground)
+                    .apply()
+                return@with
+            }
+        }
         when {
             AppConfig.isEInkMode -> {
                 ThemeStore.editTheme(this)
@@ -294,8 +313,28 @@ object ThemeConfig {
         }
     }
 
+    private fun resolveDynamicColors(context: Context): Pair<Int, Int>? {
+        if (Build.VERSION.SDK_INT < 31) return null
+        return runCatching {
+            val res = context.resources
+            val isNight = AppConfig.isNightTheme
+            val primary = if (isNight) {
+                res.getColor(android.R.color.system_accent1_200, context.theme)
+            } else {
+                res.getColor(android.R.color.system_accent1_500, context.theme)
+            }
+            val accent = if (isNight) {
+                res.getColor(android.R.color.system_accent2_200, context.theme)
+            } else {
+                res.getColor(android.R.color.system_accent2_500, context.theme)
+            }
+            primary to accent
+        }.getOrNull()
+    }
+
     fun clearBg() {
         val bgImagePath = appCtx.getPrefString(PreferKey.bgImage)
+
         appCtx.externalFiles.getFile(PreferKey.bgImage).listFiles()?.forEach {
             if (it.absolutePath != bgImagePath) {
                 it.delete()

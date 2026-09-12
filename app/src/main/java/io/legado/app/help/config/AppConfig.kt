@@ -114,6 +114,38 @@ object AppConfig : SharedPreferences.OnSharedPreferenceChangeListener {
             }
         }
 
+    var dynamicColors: Boolean
+        get() = Build.VERSION.SDK_INT >= 31
+                && appCtx.getPrefBoolean(PreferKey.dynamicColors, false)
+        set(value) {
+            appCtx.putPrefBoolean(PreferKey.dynamicColors, value)
+        }
+
+    var aiApiKey: String
+        get() = appCtx.getPrefString(PreferKey.aiApiKey) ?: ""
+        set(value) {
+            appCtx.putPrefString(PreferKey.aiApiKey, value)
+        }
+
+    var aiBaseUrl: String
+        get() = appCtx.getPrefString(PreferKey.aiBaseUrl) ?: "https://api.openai.com/v1"
+        set(value) {
+            appCtx.putPrefString(PreferKey.aiBaseUrl, value)
+        }
+
+    var aiModel: String
+        get() = appCtx.getPrefString(PreferKey.aiModel) ?: "gpt-4o-mini"
+        set(value) {
+            appCtx.putPrefString(PreferKey.aiModel, value)
+        }
+
+    var aiSystemPrompt: String
+        get() = appCtx.getPrefString(PreferKey.aiSystemPrompt)
+            ?: "你是阅读App的AI助手，可以通过工具查询书架、书源、阅读进度等信息。"
+        set(value) {
+            appCtx.putPrefString(PreferKey.aiSystemPrompt, value)
+        }
+
     var showUnread: Boolean
         get() = appCtx.getPrefBoolean(PreferKey.showUnread, true)
         set(value) {
