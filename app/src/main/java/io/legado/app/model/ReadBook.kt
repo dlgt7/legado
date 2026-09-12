@@ -115,6 +115,12 @@ object ReadBook : CoroutineScope by MainScope() {
         callBack?.upMenuView()
         callBack?.upPageAnim()
         upWebBook(book)
+        bookSource?.let {
+            CallBackExecutor.execute(
+                it, CallBackEvent.ON_READ_START,
+                book = book
+            )
+        }
         lastBookProgress = null
         webBookProgress = null
         TextFile.clear()
