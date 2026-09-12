@@ -21,14 +21,18 @@ static def releaseTime() {
 
 def name = "legado"
 def version = "3." + releaseTime()
-def gitCommits = Integer.parseInt('git rev-list HEAD --count'.execute().text.trim())
+def gitOut = 'git rev-list HEAD --count'.execute().text.trim()
+def gitCommits = gitOut.isInteger() ? Integer.parseInt(gitOut) : 0
 
 android {
     compileSdk = compile_sdk_version
     namespace = 'io.legado.app'
     kotlin {
         jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(17))
+            languageVersion.set(JavaLanguageVersion.of(19))
+        }
+        compilerOptions {
+            jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
         }
     }
 
