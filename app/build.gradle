@@ -29,7 +29,7 @@ android {
     namespace = 'io.legado.app'
     kotlin {
         jvmToolchain {
-            languageVersion.set(JavaLanguageVersion.of(19))
+            languageVersion.set(JavaLanguageVersion.of(17))
         }
         compilerOptions {
             jvmTarget.set(org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_17)
