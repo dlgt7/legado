@@ -198,6 +198,15 @@
         <activity
             android:name=".ui.book.search.SearchActivity"
             android:launchMode="standard" />
+        <!-- AI 助手 -->
+        <activity
+            android:name=".ui.assistant.AiChatActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind" />
+        <activity
+            android:name=".ui.assistant.ThoughtsActivity"
+            android:launchMode="singleTop"
+            android:screenOrientation="behind" />
         <!-- 关于界面 -->
         <activity
             android:name=".ui.about.AboutActivity"
