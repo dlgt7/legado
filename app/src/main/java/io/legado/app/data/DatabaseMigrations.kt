@@ -20,6 +20,7 @@ object DatabaseMigrations {
             migration_31_32, migration_32_33, migration_33_34, migration_34_35,
             migration_35_36, migration_36_37, migration_37_38, migration_38_39,
             migration_39_40, migration_40_41, migration_41_42, migration_42_43,
+            migration_75_76
         )
     }
 
@@ -370,5 +371,25 @@ object DatabaseMigrations {
         columnName = "enabledReview"
     )
     class Migration_64_65 : AutoMigrationSpec
+
+    private val migration_75_76 = object : Migration(75, 76) {
+        override fun migrate(db: SupportSQLiteDatabase) {
+            db.execSQL(
+                """CREATE TABLE IF NOT EXISTS thoughts(
+                    time INTEGER NOT NULL PRIMARY KEY,
+                    bookName TEXT NOT NULL,
+                    bookAuthor TEXT NOT NULL,
+                    chapterIndex INTEGER NOT NULL,
+                    chapterName TEXT NOT NULL,
+                    selectedText TEXT NOT NULL,
+                    content TEXT NOT NULL,
+                    pageNum INTEGER NOT NULL
+                )""".trimIndent()
+            )
+            db.execSQL(
+                "CREATE INDEX IF NOT EXISTS index_thoughts_bookName_bookAuthor ON thoughts(bookName, bookAuthor)"
+            )
+        }
+    }
 
 }
