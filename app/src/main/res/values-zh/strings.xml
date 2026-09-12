@@ -375,6 +375,15 @@
     <string name="local_book">本地书籍</string>
     <string name="status_bar_immersion">状态栏颜色透明</string>
     <string name="imm_navigation_bar">沉浸式导航栏</string>
+    <string name="dynamic_colors">动态取色</string>
+    <string name="dynamic_colors_desc">跟随系统壁纸配色（Android 12+）</string>
+    <string name="ai_assistant">AI 助手</string>
+    <string name="ai_input_hint">随便问点什么…</string>
+    <string name="ai_send">发送</string>
+    <string name="ai_no_api_key">请先配置 API Key</string>
+    <string name="ai_config">AI 设置</string>
+    <string name="thoughts_title">想法笔记</string>
+    <string name="export_thoughts">导出为 Markdown</string>
     <string name="imm_navigation_bar_s">导航栏颜色透明</string>
     <string name="add_to_bookshelf">放入书架</string>
     <string name="continue_read">继续阅读</string>
