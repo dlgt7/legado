@@ -76,4 +76,14 @@
         android:title="@string/log"
         app:showAsAction="never" />
 
+    <item
+        android:id="@+id/menu_ai_assistant"
+        android:title="@string/ai_assistant"
+        app:showAsAction="never" />
+
+    <item
+        android:id="@+id/menu_thoughts"
+        android:title="@string/thoughts_title"
+        app:showAsAction="never" />
+
 </menu>
