@@ -12,6 +12,8 @@ import io.legado.app.help.book.removeAllBookType
 import io.legado.app.help.coroutine.Coroutine
 import io.legado.app.help.http.StrResponse
 import io.legado.app.help.source.getBookType
+import io.legado.app.model.CallBackEvent
+import io.legado.app.model.CallBackExecutor
 import io.legado.app.model.Debug
 import io.legado.app.model.analyzeRule.AnalyzeRule
 import io.legado.app.model.analyzeRule.AnalyzeRule.Companion.setCoroutineContext
@@ -56,6 +58,11 @@ object WebBook {
         if (searchUrl.isNullOrBlank()) {
             throw NoStackTraceException("搜索url不能为空")
         }
+        CallBackExecutor.execute(
+            bookSource, CallBackEvent.ON_SEARCH_START,
+            coroutineContext = coroutineContext,
+            data = mapOf("key" to key, "page" to (page ?: 1))
+        )
         val ruleData = RuleData()
         val analyzeUrl = AnalyzeUrl(
             mUrl = searchUrl,
@@ -190,6 +197,11 @@ object WebBook {
                 canReName = canReName
             )
         }
+        CallBackExecutor.execute(
+            bookSource, CallBackEvent.ON_BOOK_OPEN,
+            book = book,
+            coroutineContext = coroutineContext
+        )
         return book
     }
 
@@ -311,6 +323,11 @@ object WebBook {
             Debug.log(bookSource.bookSourceUrl, "⇒一级目录正文不解析规则")
             return bookChapter.tag ?: ""
         }
+        CallBackExecutor.execute(
+            bookSource, CallBackEvent.ON_CONTENT_LOAD,
+            book = book, chapter = bookChapter,
+            coroutineContext = coroutineContext
+        )
         return if (bookChapter.url == book.bookUrl && !book.tocHtml.isNullOrEmpty()) {
             BookContent.analyzeContent(
                 bookSource = bookSource,
