@@ -436,6 +436,22 @@ interface JsExtensions : JsEncodeUtils {
         return response
     }
 
+    fun get(urlStr: String, headerStr: String?): Connection.Response =
+        get(urlStr, parseHeaderStr(headerStr))
+
+    fun head(urlStr: String, headerStr: String?): Connection.Response =
+        head(urlStr, parseHeaderStr(headerStr))
+
+    fun post(urlStr: String, body: String, headerStr: String?): Connection.Response =
+        post(urlStr, body, parseHeaderStr(headerStr))
+
+    private fun parseHeaderStr(headerStr: String?): Map<String, String> {
+        if (headerStr.isNullOrBlank()) return emptyMap()
+        return runCatching {
+            GSON.fromJsonObject<Map<String, String>>(headerStr).getOrNull() ?: emptyMap()
+        }.getOrDefault(emptyMap())
+    }
+
     /* Str转ByteArray */
     fun strToBytes(str: String): ByteArray {
         return str.toByteArray(charset("UTF-8"))
