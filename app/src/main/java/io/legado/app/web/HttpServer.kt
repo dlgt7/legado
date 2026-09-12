@@ -7,6 +7,8 @@ import io.legado.app.api.controller.BookController
 import io.legado.app.api.controller.BookSourceController
 import io.legado.app.api.controller.ReplaceRuleController
 import io.legado.app.api.controller.RssSourceController
+import io.legado.app.api.controller.AiController
+import io.legado.app.api.controller.ThemeController
 import io.legado.app.help.coroutine.Coroutine
 import io.legado.app.service.WebService
 import io.legado.app.utils.GSON
@@ -66,6 +68,10 @@ class HttpServer(port: Int) : NanoHTTPD(port) {
                             "/saveReplaceRule" -> ReplaceRuleController.saveRule(postData)
                             "/deleteReplaceRule" -> ReplaceRuleController.delete(postData)
                             "/testReplaceRule" -> ReplaceRuleController.testRule(postData)
+                            "/addThought" -> AiController.addThought(postData)
+                            "/deleteThought" -> AiController.deleteThought(postData)
+                            "/aiChat" -> AiController.aiChat(postData)
+                            "/importTheme" -> ThemeController.importTheme(postData)
                             else -> null
                         }
                     }
@@ -87,6 +93,12 @@ class HttpServer(port: Int) : NanoHTTPD(port) {
                         "/getRssSource" -> RssSourceController.getSource(parameters)
                         "/getRssSources" -> RssSourceController.sources
                         "/getReplaceRules" -> ReplaceRuleController.allRules
+                        "/getThoughts" -> AiController.getThoughts(parameters)
+                        "/getBookmarks" -> AiController.getBookmarks(parameters)
+                        "/getReadRecord" -> AiController.getReadRecord(parameters)
+                        "/getAiTools" -> AiController.getAiTools()
+                        "/clearAiHistory" -> AiController.clearAiHistory()
+                        "/exportTheme" -> ThemeController.exportTheme()
                         else -> null
                     }
                 }
