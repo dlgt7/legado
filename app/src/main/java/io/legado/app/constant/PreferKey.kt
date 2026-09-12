@@ -170,6 +170,13 @@ object PreferKey {
     const val paddingDisplayCutouts = "paddingDisplayCutouts"
     const val autoCheckNewBackup = "autoCheckNewBackup"
 
+    const val dynamicColors = "dynamicColors"
+
+    const val aiApiKey = "aiApiKey"
+    const val aiBaseUrl = "aiBaseUrl"
+    const val aiModel = "aiModel"
+    const val aiSystemPrompt = "aiSystemPrompt"
+
     const val cPrimary = "colorPrimary"
     const val cAccent = "colorAccent"
     const val cBackground = "colorBackground"
