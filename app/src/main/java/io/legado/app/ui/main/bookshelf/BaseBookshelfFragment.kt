@@ -118,6 +118,8 @@ abstract class BaseBookshelfFragment(layoutId: Int) : VMBaseFragment<BookshelfVi
 
             R.id.menu_import_bookshelf -> importBookshelfAlert(groupId)
             R.id.menu_log -> showDialogFragment<AppLogDialog>()
+            R.id.menu_ai_assistant -> startActivity<io.legado.app.ui.assistant.AiChatActivity>()
+            R.id.menu_thoughts -> startActivity<io.legado.app.ui.assistant.ThoughtsActivity>()
         }
     }
 
