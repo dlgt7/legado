@@ -225,5 +225,31 @@
 
     </io.legado.app.lib.prefs.PreferenceCategory>
 
+    <io.legado.app.lib.prefs.PreferenceCategory
+        android:title="@string/ai_config"
+        app:allowDividerAbove="false"
+        app:allowDividerBelow="false"
+        app:iconSpaceReserved="false"
+        app:layout="@layout/view_preference_category">
+
+        <io.legado.app.lib.prefs.EditTextPreference
+            android:key="aiApiKey"
+            android:title="API Key"
+            app:iconSpaceReserved="false" />
+
+        <io.legado.app.lib.prefs.EditTextPreference
+            android:defaultValue="https://api.openai.com/v1"
+            android:key="aiBaseUrl"
+            android:title="Base URL"
+            app:iconSpaceReserved="false" />
+
+        <io.legado.app.lib.prefs.EditTextPreference
+            android:defaultValue="gpt-4o-mini"
+            android:key="aiModel"
+            android:title="Model"
+            app:iconSpaceReserved="false" />
+
+    </io.legado.app.lib.prefs.PreferenceCategory>
+
 
 </androidx.preference.PreferenceScreen>

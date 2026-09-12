@@ -31,6 +31,13 @@
         android:title="@string/imm_navigation_bar"
         app:iconSpaceReserved="false" />
 
+    <io.legado.app.lib.prefs.SwitchPreference
+        android:defaultValue="false"
+        android:key="dynamicColors"
+        android:summary="@string/dynamic_colors_desc"
+        android:title="@string/dynamic_colors"
+        app:iconSpaceReserved="false" />
+
     <io.legado.app.lib.prefs.Preference
         android:key="barElevation"
         android:summary="@string/bar_elevation_s"
